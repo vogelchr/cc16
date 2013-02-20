@@ -570,7 +570,7 @@ static struct file_operations cc16_fops = {
 static void __exit
 cc16_free_minor(int i)
 {
-	class_device_destroy(cc16_class,firstdev+i);
+	device_destroy(cc16_class,firstdev+i);
 	if (irq[i])
 		free_irq (irq[i], cc16[i]);
 	release_region (io[i], IO_SIZE);
@@ -598,7 +598,7 @@ cc16_init_minor (int i)
 		goto out_io;
 	}
 
-	c=class_device_create(cc16_class,NULL /*parent*/,
+	c=device_create(cc16_class,NULL /*parent*/,
 		firstdev+i/*dev*/,NULL /*struct device */,
 		"cc16-%d"/*fmt*/,i);
 	if(IS_ERR(c)){
