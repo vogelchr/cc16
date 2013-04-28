@@ -4,7 +4,7 @@
 /* This file contains inline wrapper functions to the ioctls used
  * by the cc16 driver.
  *
- * License: GPL, Author: vogel@pi2.physik.uni-erlangen.de
+ * License: GPL, Author: vogelchr@vogel.cx
  *
  */
 
