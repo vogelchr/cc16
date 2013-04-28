@@ -8,6 +8,7 @@
 #include <linux/ioport.h>
 #include <linux/delay.h>
 #include <linux/wait.h>
+#include <linux/slab.h>
 
 #include <asm/atomic.h>
 #include <asm/io.h>
@@ -374,8 +375,8 @@ cc16_naf (struct cc16_data *p, int crate, struct cc16_naf_data *nafp)
 }
 
 /* -------------------- FILE OPERATTIONS ---------------------- */
-static int
-cc16_ioctl (struct inode *inode, struct file *filp,
+static long
+cc16_unlocked_ioctl (struct file *filp,
 	    unsigned int cmd, unsigned long arg)
 {
 	struct cc16_file *f = (struct cc16_file *) filp->private_data;
@@ -562,7 +563,7 @@ static struct file_operations cc16_fops = {
 	.owner = THIS_MODULE,
 	.read = cc16_read,
 	.poll = cc16_poll,
-	.ioctl = cc16_ioctl,
+	.unlocked_ioctl = cc16_unlocked_ioctl,
 	.open = cc16_open,
 	.release = cc16_close
 };
@@ -581,7 +582,7 @@ static int __init
 cc16_init_minor (int i)
 {
 	struct cc16_data *p;
-	struct class_device *c;
+	struct device *c;
 
 	if (NULL == (p = kmalloc(sizeof (*p), GFP_KERNEL))) {
 		printk ("cc16-%d: could not allocate memory\n", i);
@@ -610,7 +611,7 @@ cc16_init_minor (int i)
 
 	atomic_set(&(p->irqctr), 0);		/* interrupt counter */
 	init_waitqueue_head(&(p->waitqueue));	/* processes sleep here */
-	p->lock = SPIN_LOCK_UNLOCKED;		/* hardware access lock */
+	spin_lock_init(&p->lock);		/* hardware access spinlock */
 	p->iobase = io[i];
 	p->irq = irq[i];
 	p->minor = i;
