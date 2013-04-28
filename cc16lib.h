@@ -122,7 +122,7 @@ static inline int
 cc16_naf_r16(int fd, int n,int a,int f,u_int16_t *data,int *q, int *x){
 	struct cc16_naf_data naf;
 
-	naf.naf = CC16_NAF(n,a,f) | CC16_NAF_XQ;
+	naf.naf = CC16_NAF(n,a,f) | CC16_NAF_16BIT;
 
 	if(!CC16_NAF_READ(naf.naf)){
 		fprintf(stderr,"NAF N=%d A=%d F=%d is no read!\n",n,a,f);
