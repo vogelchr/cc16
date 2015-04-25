@@ -148,7 +148,7 @@ module_param_array (irq, int, NULL, 0);
 module_param_array (io, uint, NULL, 0);
 module_param(debug,int,0);
 
-MODULE_AUTHOR ("Christian Vogel <chris@obelix.hedonism.cx>");
+MODULE_AUTHOR ("Christian Vogel <vogelchr@vogel.cx>");
 MODULE_DESCRIPTION ("Wiener CC16/PC16 Driver");
 MODULE_VERSION ("0.0.0");
 MODULE_LICENSE ("GPL");
