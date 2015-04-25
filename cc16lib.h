@@ -295,7 +295,7 @@ cc16_z(int fd){
 static inline int
 cc16_c(int fd){
 	if(ioctl(fd,CC16_IOCTL_C)){
-		perror("CC16_IOCTL_Z");
+		perror("CC16_IOCTL_C");
 		return -1;
 	}
 	return 0;
