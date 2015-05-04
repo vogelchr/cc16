@@ -6,10 +6,16 @@ KVER:=$(shell uname -r)
 KDIR=/lib/modules/$(KVER)/build
 PWD:= $(shell pwd)
 
-default : cc16.ko
+default : cc16.ko cc16-test
 
 cc16.ko : cc16.c cc16.h
 	$(MAKE) -C $(KDIR) SUBDIRS=$(PWD) modules
+
+cc16-test : cc16-test.o
+	$(CC) -o $@ $^
+
+cc16-test.o : cc16-test.c
+	$(CC) -Wall -Wextra -Os -ggdb -o $@ -c $^
 
 CFLAGS=-Wall -g -I.
 
