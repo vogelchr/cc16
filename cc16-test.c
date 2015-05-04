@@ -9,12 +9,14 @@
 
 #include "cc16.h"
 
+#define CC16_DEV "/dev/cc16-0"
+
 int main(int argc,char **argv){
 	int fd;
 	int i,j;
 
-	if(-1 == (fd=open("/cc16",O_RDWR))){
-		perror("/cc16");
+	if(-1 == (fd=open(CC16_DEV,O_RDWR))){
+		perror(CC16_DEV);
 		return -1;
 	}
 
