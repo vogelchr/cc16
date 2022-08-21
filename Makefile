@@ -9,7 +9,7 @@ PWD:= $(shell pwd)
 default : cc16.ko cc16-test
 
 cc16.ko : cc16.c cc16.h
-	$(MAKE) -C $(KDIR) SUBDIRS=$(PWD) modules
+	$(MAKE) -C $(KDIR) M=$(PWD) modules
 
 cc16-test : cc16-test.o
 	$(CC) -o $@ $^

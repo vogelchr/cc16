@@ -614,8 +614,8 @@ cc16_init_minor (int i)
 		goto out_free;
 	}
 
-	if (irq[i] && request_irq(irq[i], cc16_isr, IRQF_DISABLED, "cc16", p)) {
-		printk ("cc16-%d: cannot not get irq %d\n", i, irq[i]);
+	if (irq[i] && request_irq(irq[i], cc16_isr, IRQF_TRIGGER_NONE, "cc16", p)) {
+		printk ("cc16-%d: cannot get irq %d\n", i, irq[i]);
 		goto out_io;
 	}
 
@@ -674,7 +674,7 @@ cc16_init (void)
 
 	cc16_class = class_create(THIS_MODULE, "cc16");
 	if(IS_ERR(cc16_class)){
-		printk(KERN_ERR "Error creatinc cc16-class.\n");
+		printk(KERN_ERR "Error creating cc16-class.\n");
 		goto out_cdev;
 	}
 
