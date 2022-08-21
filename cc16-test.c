@@ -5,6 +5,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/select.h>
+#include <sys/ioctl.h>
 #include <fcntl.h>
 
 #include "cc16.h"
@@ -13,7 +14,10 @@
 
 int main(int argc,char **argv){
 	int fd;
-	int i,j;
+	int j;
+
+	(void) argc;
+	(void) argv; /* suppress warnings */
 
 	if(-1 == (fd=open(CC16_DEV,O_RDWR))){
 		perror(CC16_DEV);
